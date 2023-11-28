@@ -1,0 +1,4 @@
+./smart_sun_backend/.env
+./smart_sun_backend/.idea
+./smart_sun_backend/test.py
+./smart_sun_backend/config/secrets.py
