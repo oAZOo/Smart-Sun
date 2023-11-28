@@ -6,8 +6,8 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from dotenv import dotenv_values
 
-SECRET = dotenv_values('SECRET')
-
+config = dotenv_values(".env")
+SECRET = config['SECRET']
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta]):
     to_encode = data.copy()

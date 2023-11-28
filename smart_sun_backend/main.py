@@ -35,39 +35,41 @@ def shutdown_db_client():
     except Exception as e:
         print(e)
 
+@app.post('/register')
+def register(user: User):
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    hashed_password = pwd_context.hash(user.password)
+    # if not systems_collection.find_one({"_id": user.system_id}):
+    #     raise HTTPException(status_code=400, detail='System ID Not Found')
+    # if users_collection.find_one({'username': user.username}):
+    #     raise HTTPException(status_code=400, detail="Username Already Exists")
+    # if users_collection.find_one({'phone_number': user.phone_number}):
+    #     raise HTTPException(status_code=400, detail="phone number Already associated with another account")
+    # if users_collection.find_one({'email': user.email}):
+    #     raise HTTPException(status_code=400, detail="email Already associated with another account")
 
-#
-#
-# @app.post('/register')
-# def register(user: User):
-#     if not systems_collection.find_one({"_id": user.system_id}):
-#         raise HTTPException(status_code=400, detail='System ID Not Found')
-#     if users_collection.find_one({'username': user.username}):
-#         raise HTTPException(status_code=400, detail="Username Already Exists")
-#     if users_collection.find_one({'phone_number': user.phone_number}):
-#         raise HTTPException(status_code=400, detail="phone number Already associated with another account")
-#     if users_collection.find_one({'email': user.email}):
-#         raise HTTPException(status_code=400, detail="email Already associated with another account")
-#
-#     new_user = {
-#         'username': user.username,
-#         'email': user.email,
-#         'password': user.password,
-#         'system_id': user.system_id,
-#         'phone_number': user.phone_number,
-#     }
-#     result = users_collection.insert_one(new_user)
-#     return {"id": str(result.inserted_id)}
-pwd_context = CryptContext(schemes=["bycrpt"], deprecated="auto")
+    new_user = {
+        'username': user.username,
+        'email': user.email,
+        'password': hashed_password,
+        'system_id': user.system_id,
+        'phone_number': user.phone_number,
+    }
+    result = users_collection.insert_one(new_user)
+    return {"id": str(result.inserted_id)}
+
+
+
 
 
 @app.post('/login', response_model=Token)
 async def login_user(user: UserLogin):
-    stored_user: User = users_collection.find_one({'username': user.username})
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    stored_user = users_collection.find_one({'username': user.username})
     if stored_user and pwd_context.verify(user.password, stored_user['password']):
         data = {
-            "username": stored_user.username,
-            "system_id": stored_user.system_id,
+            "username": stored_user['username'],
+            "system_id": stored_user['system_id'],
         }
         access_token = create_access_token(data=data, expires_delta=timedelta(days=1))
         return {"access_token": access_token}
