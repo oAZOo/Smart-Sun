@@ -9,7 +9,7 @@ class User(BaseModel):
     password: str
 
 class UserLogin(BaseModel):
-    username: str
+    email: str
     password: str
 
 

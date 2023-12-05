@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 import fastapi
-from fastapi import HTTPException
+from fastapi import HTTPException , APIRouter
 from dotenv import dotenv_values
 from pymongo.mongo_client import MongoClient
 from passlib.context import CryptContext
@@ -35,12 +35,16 @@ def shutdown_db_client():
     except Exception as e:
         print(e)
 
+
+router = APIRouter()
+
+
 @app.post('/register')
 def register(user: User):
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     hashed_password = pwd_context.hash(user.password)
-    # if not systems_collection.find_one({"_id": user.system_id}):
-    #     raise HTTPException(status_code=400, detail='System ID Not Found')
+    if not systems_collection.find_one({"_id": user.system_id}):
+        raise HTTPException(status_code=400, detail='System ID Not Found')
     # if users_collection.find_one({'username': user.username}):
     #     raise HTTPException(status_code=400, detail="Username Already Exists")
     # if users_collection.find_one({'phone_number': user.phone_number}):
@@ -59,16 +63,13 @@ def register(user: User):
     return {"id": str(result.inserted_id)}
 
 
-
-
-
 @app.post('/login', response_model=Token)
 async def login_user(user: UserLogin):
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    stored_user = users_collection.find_one({'username': user.username})
+    stored_user = users_collection.find_one({'email': user.email})
     if stored_user and pwd_context.verify(user.password, stored_user['password']):
         data = {
-            "username": stored_user['username'],
+            "email": stored_user['email'],
             "system_id": stored_user['system_id'],
         }
         access_token = create_access_token(data=data, expires_delta=timedelta(days=1))
