@@ -43,8 +43,8 @@ router = APIRouter()
 def register(user: User):
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     hashed_password = pwd_context.hash(user.password)
-    if not systems_collection.find_one({"_id": user.system_id}):
-        raise HTTPException(status_code=400, detail='System ID Not Found')
+    # if not systems_collection.find_one({"_id": user.system_id}):
+    #     raise HTTPException(status_code=400, detail='System ID Not Found')
     # if users_collection.find_one({'username': user.username}):
     #     raise HTTPException(status_code=400, detail="Username Already Exists")
     # if users_collection.find_one({'phone_number': user.phone_number}):
