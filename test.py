@@ -36,11 +36,17 @@ def get_profile(token):
     print("Response Status Code:", response.status_code)
     print("Response Content:", response.json())
 
+def get_system(token):
+    url = "http://localhost:8000/user/get_system"
+    headers = {"Authorization": f"Bearer {token}"}  # Replace YOUR_TOKEN with an actual token
+    response = requests.get(url, headers=headers)
+    print("Response Status Code:", response.status_code)
+    print("Response Content:", response.json())
+
 
 if __name__ == "__main__":
     # create_user()
     # token = login()['access_token']
     # print(token)
     # time.sleep(1)
-    get_profile(str("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imdlb3JnaW9AZ21haWwuY29tIiwic3lzdGVtX2lkIjoiNjU3MGQ5ZWMyMWVkOWMzNGZiYjVhZGU4IiwidXNlcm5hbWUiOiJnZW9yZ2lvb24iLCJwaG9uZV9udW1iZXIiOiI3NjE1NDY1NSIsImV4cCI6MTcwMTk4NTAxNn0.yN3sEFBTYsC2xT_CR__ZuHRqFkiz7fc25nkkWo4K0a0"))
-
+    get_system(token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imdlb3JnaW9AZ21haWwuY29tIiwic3lzdGVtX2lkIjoiNjU3MGQ5ZWMyMWVkOWMzNGZiYjVhZGU4IiwidXNlcm5hbWUiOiJnZW9yZ2lvb24iLCJwaG9uZV9udW1iZXIiOiI3NjE1NDY1NSIsImV4cCI6MTcwMTk4ODcyNH0.5RYM90fpr9qyaaCpjIGf_fD_8yku79RJMzmCOo80MCM")

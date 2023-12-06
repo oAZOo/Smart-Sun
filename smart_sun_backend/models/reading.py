@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class Reading(BaseModel):
+    timestamp: str
     system_id: str
     current_consumption: float
     light_intensity: float

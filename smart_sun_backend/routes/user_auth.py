@@ -5,7 +5,8 @@ from fastapi import APIRouter, HTTPException
 from passlib.context import CryptContext
 
 from controllers.create_token import create_access_token
-from models.user import Token, UserLogin, User
+from models.user import UserLogin, User
+from models.token import Token
 from database import users_collection, systems_collection
 
 from dotenv import load_dotenv
@@ -14,10 +15,10 @@ import os
 load_dotenv("../.env")
 secret_key = str(os.getenv('SECRET'))
 
-auth_routes = APIRouter()
+user_auth_routes = APIRouter()
 
 
-@auth_routes.post('/login', response_model=Token)
+@user_auth_routes.post('/login', response_model=Token)
 async def login_user(user: UserLogin):
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     stored_user = users_collection.find_one({'email': user.email})
@@ -33,7 +34,7 @@ async def login_user(user: UserLogin):
     raise HTTPException(status_code=401, detail="Wrong Credentials")
 
 
-@auth_routes.post('/register')
+@user_auth_routes.post('/register')
 def register(user: User):
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     hashed_password = pwd_context.hash(user.password)
