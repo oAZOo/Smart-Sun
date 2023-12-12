@@ -49,4 +49,6 @@ if __name__ == "__main__":
     # token = login()['access_token']
     # print(token)
     # time.sleep(1)
-    get_system(token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imdlb3JnaW9AZ21haWwuY29tIiwic3lzdGVtX2lkIjoiNjU3MGQ5ZWMyMWVkOWMzNGZiYjVhZGU4IiwidXNlcm5hbWUiOiJnZW9yZ2lvb24iLCJwaG9uZV9udW1iZXIiOiI3NjE1NDY1NSIsImV4cCI6MTcwMTk4ODcyNH0.5RYM90fpr9qyaaCpjIGf_fD_8yku79RJMzmCOo80MCM")
+    TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imdlb3JnaW9AdGhpbmtlcnMuY29tIiwic3lzdGVtX2lkIjoiNjU3NWIyYWQ1ZDU2OTY2M2I4N2RkOTFkIiwidXNlcm5hbWUiOiJnZW9yZ2lvIiwicGhvbmVfbnVtYmVyIjoiNzYxNTQ2NTUiLCJleHAiOjE3MDIyOTg4MDZ9.iFJ5MiOex17g5JrRKaQJMXoRF9E_GcmvNY7PnbWdLuY'
+    # get_system(token=TOKEN)
+    # get_profile(token=TOKEN)

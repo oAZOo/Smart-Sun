@@ -17,7 +17,6 @@ load_dotenv("../.env")
 secret_key = str(os.getenv('SECRET'))
 
 
-
 @user_routes.get('/profile')
 async def get_user_profile(auth_token: str = Header(..., convert_underscores=False, alias="Authorization")):
     try:
@@ -41,7 +40,7 @@ async def get_system(auth_token: str = Header(..., convert_underscores=False, al
         user_info: User = get_current_user(token=auth_token.split(' ')[1], secret=secret_key)
     except Exception as e:
         raise e
-    switches = switches_collection.find({'system_id': user_info.system_id})
+    switches = switches_collection.find({'system_id': user_info['system_id']})
     switches_list = []
     for switch in switches:
         switch['_id'] = str(switch['_id'])
