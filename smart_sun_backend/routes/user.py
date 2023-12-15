@@ -1,6 +1,5 @@
-from multiprocessing import AuthenticationError
-
-from fastapi import APIRouter, Header
+import fastapi.requests
+from fastapi import APIRouter, HTTPException
 import pymongo
 from bson import ObjectId
 
@@ -18,46 +17,37 @@ secret_key = str(os.getenv('SECRET'))
 
 
 @user_routes.get('/profile')
-async def get_user_profile(auth_token: str = Header(..., convert_underscores=False, alias="Authorization")):
-    try:
-        user_info: User = get_current_user(token=auth_token.split(' ')[1], secret=secret_key)
-    except Exception as e:
-        raise e
-    system_id = user_info['system_id']
-    try:
-        system_data = systems_collection.find_one({'_id': ObjectId(system_id)})
-        del system_data['_id']
-    except Exception as e:
-        print(e)
-        raise FileNotFoundError
-    data = {**system_data, **user_info}
+async def get_user_profile(request: fastapi.Request):
+    auth_token = request.headers.get('token')
+    user_info: User = get_current_user(auth_token)
+    system_id = user_info.system_id
+    system_data = systems_collection.find_one({'_id': ObjectId(str(system_id))})
+    if not system_data:
+        return HTTPException(status_code=404,
+                             detail="System Not Found")
+    data = {**system_data.__dict__, **user_info.__dict__}
     return data
 
 
 @user_routes.get("/get_system")
-async def get_system(auth_token: str = Header(..., convert_underscores=False, alias="Authorization")):
-    try:
-        user_info: User = get_current_user(token=auth_token.split(' ')[1], secret=secret_key)
-    except Exception as e:
-        raise e
-    switches = switches_collection.find({'system_id': user_info['system_id']})
+async def get_system(request: fastapi.Request):
+    auth_token = request.headers.get('token')
+    user_info: User = get_current_user(auth_token)
+    switches = switches_collection.find({'system_id': user_info.system_id})
     switches_list = []
     for switch in switches:
         switch['_id'] = str(switch['_id'])
         switches_list.append(switch)
+    if len(switches_list) == 0:
+        return HTTPException(status_code=404,
+                             detail="System Data Not Found")
     return switches_list
 
 
 @user_routes.get("/latest_reading")
-async def get_latest_reading(auth_token: str = Header(..., convert_underscores=False, alias="Authorization")):
-    try:
-        user_info: User = get_current_user(token=auth_token.split(' ')[1], secret=secret_key)
-    except Exception as e:
-        raise e
+async def get_latest_reading(request: fastapi.Request):
+    auth_token = request.headers.get('token')
+    user_info: User = get_current_user(auth_token)
     system_id = user_info.system_id
     latest_reading = readings_collection.find_one({"system_id": system_id}, sort=[("timestamp", pymongo.DESCENDING)])
     return latest_reading
-
-
-
-

@@ -6,7 +6,8 @@ class User(BaseModel):
     email: str
     phone_number: str
     system_id: str
-    password: str
+    password: str = None
+
 
 class UserLogin(BaseModel):
     email: str

@@ -40,7 +40,8 @@ async def login_admin(admin: AdminLogin):
     if stored_user and pwd_context.verify(admin.password, stored_user['password']):
         data = {
             "email": stored_user['email'],
-            "username": stored_user['username']
+            "username": stored_user['username'],
+            "is_admin": stored_user['is_admin']
         }
         access_token = create_access_token(data=data, expires_delta=timedelta(days=1), secret=secret_key)
         return {"access_token": access_token}

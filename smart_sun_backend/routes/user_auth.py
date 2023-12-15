@@ -4,6 +4,7 @@ from bson import ObjectId
 from fastapi import APIRouter, HTTPException
 from passlib.context import CryptContext
 
+from auth.auth_handler import signJWT
 from controllers.create_token import create_access_token
 from models.user import UserLogin, User
 from models.token import Token
@@ -29,7 +30,7 @@ async def login_user(user: UserLogin):
             "username": stored_user['username'],
             "phone_number": stored_user['phone_number']
         }
-        access_token = create_access_token(data=data, expires_delta=timedelta(days=1), secret=secret_key)
+        access_token = signJWT(data=data)
         return {"access_token": access_token}
     raise HTTPException(status_code=401, detail="Wrong Credentials")
 
