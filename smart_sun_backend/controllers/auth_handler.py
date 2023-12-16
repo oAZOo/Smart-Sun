@@ -10,9 +10,12 @@ from dotenv import load_dotenv
 
 from models.user import User
 
-
 load_dotenv("../.env")
 SECRET = str(os.getenv('SECRET'))
+
+credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                      detail="Could Not Validate credentials"
+                                      )
 
 
 def create_access_token(
@@ -31,9 +34,6 @@ def create_access_token(
 
 
 def get_current_user(token: str = Header(...)) -> User:
-    credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                          detail="Could Not Validate credentials",
-                                          headers={'WWW-Authenticate': "Bearer"})
     try:
         payload = jwt.decode(token, SECRET, algorithms=['HS256'])
         if payload is None:
@@ -50,23 +50,18 @@ def get_current_user(token: str = Header(...)) -> User:
 
 
 def verify_user(token: str = Header(...)) -> bool:
-    credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                          detail="Could Not Validate credentials",
-                                          headers={'WWW-Authenticate': "Bearer"})
     try:
         payload = jwt.decode(token, SECRET, algorithms=['HS256'])
         if payload is None:
             raise credentials_exception
+        # if payload['is_admin'] == 'true':
+        #     raise credentials_exception
     except JWTError:
         raise credentials_exception
-
     return True
 
 
 def verify_admin(token: str = Header(...)) -> bool:
-    credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                          detail="Could Not Validate credentials",
-                                          headers={'WWW-Authenticate': "Bearer"})
     try:
         payload = jwt.decode(token, SECRET, algorithms=['HS256'])
         if not payload['is_admin']:

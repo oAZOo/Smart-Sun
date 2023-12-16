@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 
 from auth.auth_bearer import JWTBearer
-from controllers.create_token import verify_user, verify_admin
+from controllers.auth_handler import verify_user, verify_admin
 from database import db_client
 from routes import user_auth, user, admin, admin_auth
 

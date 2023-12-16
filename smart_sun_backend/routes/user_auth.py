@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 from passlib.context import CryptContext
 
 from auth.auth_handler import signJWT
-from controllers.create_token import create_access_token
+from controllers.auth_handler import create_access_token
 from models.user import UserLogin, User
 from models.token import Token
 from database import users_collection, systems_collection

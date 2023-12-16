@@ -4,7 +4,7 @@ from bson import ObjectId
 from fastapi import APIRouter, HTTPException
 from passlib.context import CryptContext
 
-from controllers.create_token import create_access_token
+from controllers.auth_handler import create_access_token
 from models.admin import AdminLogin, Admin
 from models.token import Token
 
