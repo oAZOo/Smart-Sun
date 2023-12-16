@@ -21,13 +21,9 @@ credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
 def create_access_token(
         data: dict,
         secret: str,
-        expires_delta: Optional[timedelta]
 ):
     to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(days=1)
+    expire = datetime.utcnow() + timedelta(days=1)
     to_encode.update({'exp': expire})
     encoded_jwt = jwt.encode(to_encode, secret, algorithm='HS256')
     return encoded_jwt
@@ -54,8 +50,8 @@ def verify_user(token: str = Header(...)) -> bool:
         payload = jwt.decode(token, SECRET, algorithms=['HS256'])
         if payload is None:
             raise credentials_exception
-        # if payload['is_admin'] == 'true':
-        #     raise credentials_exception
+        if payload['is_admin']:
+            raise credentials_exception
     except JWTError:
         raise credentials_exception
     return True
