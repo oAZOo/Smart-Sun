@@ -2,6 +2,7 @@ import fastapi.requests
 from fastapi import APIRouter, HTTPException
 import pymongo
 from bson import ObjectId
+from bson.errors import InvalidId
 
 from controllers.auth_handler import get_current_user
 
@@ -51,6 +52,7 @@ async def get_latest_reading(request: fastapi.Request):
     user_info: User = get_current_user(token=auth_token)
     system_id = user_info.system_id
     latest_reading = readings_collection.find_one({"system_id": system_id}, sort=[("timestamp", pymongo.DESCENDING)])
+    latest_reading['_id'] = str(latest_reading['_id'])
     return latest_reading
 
 
@@ -62,27 +64,29 @@ async def toggle_switch(
     auth_token = request.headers.get('token')
     user_info: User = get_current_user(token=auth_token)
     system_id = user_info.system_id
-    switches = switches_collection.find({'_id': ObjectId(switch_id)})
-    switch = [s for s in switches]
-    switch = switch[0]
-    if not switch:
-        return {'error': 'switch not found'}
-    if switch['system_id'] == system_id:
-        if switch['state'] == True:
-            new_state = False
-        else:
-            new_state = True
-        update_result = switches_collection.update_one({'_id': ObjectId(switch_id)}, {'$set': {'state': new_state}})
-        if update_result.matched_count > 0:
-            print(f"Matched {update_result.matched_count} document(s).")
-            if update_result.modified_count > 0:
-                response = {'success': f"Modified {update_result.modified_count} document(s)."}
-            else:
-                response = {'error': "No documents were modified."}
-        else:
-            response = {'error': "No documents matched the query."}
+    try:
+        switch = switches_collection.find_one({'_id': ObjectId(switch_id)})
+        if not switch:
+            return {'error': 'Switch not found'}
+    except InvalidId:
+        return {'error': 'Invalid switch ID'}
+
+    if switch['system_id'] != system_id:
+        return {'error': 'The switch doesn\'t belong to you'}
+
+    new_state = not switch['state']
+
+    update_result = switches_collection.find_one_and_update(
+        {'_id': ObjectId(switch_id)},
+        {'$set': {'state': new_state}},
+        return_document=True  # Return the updated document
+    )
+
+    if update_result:
+        response = {'success': 'Switch state toggled successfully', 'state': update_result['state']}
     else:
-        response = {'error': 'the switch doesnt belong to you'}
+        response = {'error': 'Failed to toggle switch state'}
+
     return response
 
 

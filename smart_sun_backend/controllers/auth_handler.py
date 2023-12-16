@@ -1,11 +1,7 @@
 import os
-
-from typing import Optional
 from datetime import timedelta, datetime
-
-from fastapi import HTTPException, status, Depends, Header
+from fastapi import HTTPException, status, Header
 from jose import jwt, JWTError
-
 from dotenv import load_dotenv
 
 from models.user import User
@@ -50,7 +46,7 @@ def verify_user(token: str = Header(...)) -> bool:
         payload = jwt.decode(token, SECRET, algorithms=['HS256'])
         if payload is None:
             raise credentials_exception
-        if payload['is_admin']:
+        if 'is_admin' in payload.keys():
             raise credentials_exception
     except JWTError:
         raise credentials_exception
