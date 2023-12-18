@@ -1,38 +1,31 @@
+import datetime
+import random
+import time
+
 import requests
 
+def add_reading_test():
+    consumptions = list(range(0, 15, 1))
+    light_intensities = list(range(0, 100, 1))
+    timestamp = str(datetime.datetime.utcnow().timestamp())
+    system_id = '657ce5c881e4021fb27811c0'
+    current_consumption = random.choice(consumptions)
+    light_intensity = random.choice(light_intensities)
 
-
-def create_user():
-    user_data = {
-        'username': 'thinkers',
-        'password': 'giogio',
-        'phone_number': '03255691',
-        'system_id': '123',
-        'email': 'thinkers@gmail.com'
+    data = {
+        'timestamp': timestamp,
+        'system_id': system_id,
+        'current_consumption': current_consumption,
+        'light_intensity': light_intensity
     }
-    response = requests.post(url="http://127.0.0.1:8000/register", json=user_data)
-    print(response)
+    response = requests.post(url='http://127.0.0.1:8000/micro_cont/add_reading', json=data)
     print(response.json())
 
 
 
+if __name__ == "__main__":
+    for i in range(15):
+        time.sleep(1)
+        add_reading_test()
 
-def login():
-    user_data = {
-        'email': 'thinkers@gmail.com',
-        'password': 'giogio'
-    }
-    response = requests.post(url="http://127.0.0.1:8000/login", json=user_data)
-    print(response)
-    user_auth = response.json()
-    print(user_auth)
-
-
-
-
-
-if __name__ =="__main__":
-    # create_user()
-    while True:
-        login()
 
