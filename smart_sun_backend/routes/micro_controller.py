@@ -20,7 +20,7 @@ def add_reading(reading: Reading):
 def get_relay_state(system_id) -> dict:
     response = {}
     try:
-        cursor = switches_collection.find({'_id': ObjectId(system_id)})
+        cursor = switches_collection.find({'system_id': system_id})
     except InvalidId:
         return {'error': 'invalid_switch'}
 

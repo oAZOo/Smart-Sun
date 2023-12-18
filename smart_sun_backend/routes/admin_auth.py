@@ -43,6 +43,6 @@ async def login_admin(admin: AdminLogin):
             "username": stored_user['username'],
             "is_admin": stored_user['is_admin']
         }
-        access_token = create_access_token(data=data, expires_delta=timedelta(days=1), secret=secret_key)
+        access_token = create_access_token(data=data, secret=secret_key)
         return {"access_token": access_token}
     raise HTTPException(status_code=401, detail="Wrong Credentials")
