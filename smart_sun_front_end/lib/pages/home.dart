@@ -28,8 +28,8 @@ class _HomePageState extends State<HomePage> {
   final address = dotenv.env['SERVER_ADDRESS'];
   late String system_id;
   String TOKEN = '';
-  num ccv = 0;
-  num pcv = 0;
+  num ccv = 3.5;
+  num pcv = 7.3;
   // bool is_on = false;
   bool is_fetching = true;
   List<bool> switchStates = []; 

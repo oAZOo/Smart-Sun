@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/foundation/key.dart';
+// import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_sun/pages/home.dart';
-import 'package:smart_sun/pages/login.dart';
 import 'package:smart_sun/pages/profile.dart';
-import 'package:smart_sun/pages/register.dart';
 import 'package:smart_sun/pages/notification.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 

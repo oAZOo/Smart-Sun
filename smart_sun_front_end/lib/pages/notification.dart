@@ -69,7 +69,47 @@ class _NotificationPageState extends State<NotificationPage> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 50.0,
+                ),
+                Container(
+                  child: Center(
+                    child: Text(
+                      // '$username',
+                      'It is burning up there, Use your appliances \n 9h 47am',
+                      style: TextStyle(
+                        fontFamily:'Oswald',
+                        color: Black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  height: 70.0,
+                  color: Yellow,
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                Container(
+                  child: Center(
+                    child: Text(
+                      // '$username',
+                      'You are exhausting the Sun, Reduce your consumption \n 3h 22pm',
+                      style: TextStyle(
+                        fontFamily:'Oswald',
+                        color: Black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  height: 70.0,
+                  color: Yellow,
+                ),
               ],
             ),
           ),

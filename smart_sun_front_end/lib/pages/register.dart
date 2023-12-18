@@ -22,29 +22,29 @@ class _RegisterPageState extends State<RegisterPage> {
   late String _email;
   final address = dotenv.env['SERVER_ADDRESS'];
   _register() async {
-    final response = await http.post(
-      Uri.parse('$address/register'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'name': '$_userName',
-        'email': '$_email',
-        'phone': '$_phoneNumber',
-        'system_id': '$_systemId',
-        'password': '$_password'
-      }),
-    );
-    if (response.statusCode == 200) {
-      print('success');
+    // final response = await http.post(
+    //   Uri.parse('$address/register'),
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json; charset=UTF-8',
+    //   },
+    //   body: jsonEncode(<String, String>{
+    //     'name': '$_userName',
+    //     'email': '$_email',
+    //     'phone': '$_phoneNumber',
+    //     'system_id': '$_systemId',
+    //     'password': '$_password'
+    //   }),
+    // );
+    // if (response.statusCode == 200) {
+    //   print('success');
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => LoginPage(),
         ),
       );
-    } else {
-      throw Exception('Failed to create user.');
-    }
+    // } else {
+    //   throw Exception('Failed to create user.');
+    // }
   }
 
   @override

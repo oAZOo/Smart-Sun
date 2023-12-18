@@ -1,0 +1,22 @@
+{
+  "name": "smart_sun_front_end",
+  "version": "1.0.0",
+  "description": "A new Flutter project.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node main.dart"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oAZOo/Smart-Sun.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oAZOo/Smart-Sun/issues"
+  },
+  "homepage": "https://github.com/oAZOo/Smart-Sun#readme"
+}

@@ -1,0 +1,167 @@
+@font-face {
+    font-family: 'Oswald';
+    src: url('../../public/Oswald-VariableFont_wght.ttf') format('truetype');
+  }
+
+.text{
+    font-family: 'Oswald', sans-serif;
+    color: black;
+}
+.landingPage {
+    display: flex;
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+                url('../images/SMART.png') no-repeat fixed;
+    background-size: contain;
+    background-position: center; /* Center the background image */
+    background-color: black;
+}
+.textBoxesWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    padding-left: 150px;
+    padding-top: 50px;
+}
+
+.aboutUs{
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    background-color: #F3BA2F;
+    border: solid 2px #F3BA2F;
+    border-radius: 8px;
+    height: 200px;
+    padding: 30px;
+    width: 400px;
+    color:#F3BA2F;
+}
+
+
+.howItWorks{
+    border: solid 2px #F3BA2F;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    background-color:#F3BA2F;
+    border-radius: 8px;
+    height: 100px;
+    padding: 30px;
+    padding-bottom: 55px;
+    margin-top: 30px;
+    width: 400px;
+    color:white;
+    
+}
+
+.mobileScreenshot{
+    margin-left: -50px;
+    margin-top: 20px;
+}
+
+.adminLogin{
+    display: flex;
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)),
+                url('../images/SMART.png') no-repeat fixed;
+    background-size: contain;
+    background-position: center; /* Center the background image */
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.adminPanel{
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.addSystem{
+    display: flex;
+    flex-direction: column;
+    width:70vw;
+    gap: 10px;
+    padding: 30px 0 0 30px;
+}
+
+.addSystem > label{
+    font-weight: bold;
+    color: #F3BA2F;
+    font-family: 'Oswald', sans-serif;
+}
+
+.addSystem > input{
+    width: 80%;
+    height: 45px;
+    border-radius: 8px;
+    padding-left: 5px;
+    background-color: rgba(204, 198, 198, 0.178);
+}
+
+.addSystem > button{
+    width: 80%;
+    margin-top: 15px;
+    font-weight: bolder;
+    font-size: larger;
+    color: black;
+    height: 45px;
+    border-radius: 8px;
+    border-style: none;
+    padding-left: 5px;
+    background-color: #F3BA2F;
+}
+
+.viewSystems, .viewUsers{
+    padding-top: 30px;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 75vw;
+    gap: 30px;
+    
+}
+.pageTitle{
+    color: #F3BA2F;
+    font-family: 'Oswald', sans-serif;
+}
+
+.button{
+    font-family: 'Oswald', sans-serif;
+}
+
+
+.table {
+    border-collapse: collapse;
+    margin: 10px 30px 30px 30px auto;
+    min-width: 400px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    background-color: #F3BA2F;
+    color: #333;
+  }
+  
+  .table tr {
+    border-bottom: 1px solid #F3BA2F;
+  }
+  .table tbody tr:hover {
+    background-color: #F3BA2F;
+  }
+  
+  .table th {
+    color: black;
+    font-family: 'Oswald', sans-serif;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px 10px;
+    
+  }
+
