@@ -29,3 +29,16 @@ def shutdown_db_client():
         print('DB Client Closed Successfully')
     except Exception as e:
         print(e)
+
+
+
+
+from pyngrok import ngrok
+import nest_asyncio
+import uvicorn
+
+
+ngrok_tunnel = ngrok.connect(8000)
+print('Public URL:', ngrok_tunnel.public_url)
+nest_asyncio.apply()
+uvicorn.run(app, port=8000)
